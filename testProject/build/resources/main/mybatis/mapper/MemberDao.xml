@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testproject.dao.MemberDao">
+
+    <insert id="insertMember">
+        INSERT INTO tbl_member (username, password, name, role)
+        VALUES
+            (#{member.username}, #{member.password}, #{member.name}, #{member.role})
+    </insert>
+
+    <select id="findByUsername" resultType="com.example.testproject.dto.MemberDto">
+        SELECT username, password, name, role, korean_score AS koreanScore, math_score AS mathScore, history_score AS historyScore
+        FROM tbl_member WHERE username = #{username}
+    </select>
+
+    <update id="updateKoreanScore">
+        UPDATE tbl_member SET korean_score = #{score} WHERE username = #{username}
+    </update>
+
+    <update id="updateMathScore">
+        UPDATE tbl_member SET math_score = #{score} WHERE username = #{username}
+    </update>
+
+    <update id="updateHistoryScore">
+        UPDATE tbl_member SET history_score = #{score} WHERE username = #{username}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testproject.dao.ExamDao">
+
+    <select id="koreanExamList" resultType="com.example.testproject.dto.ExamDto">
+        SELECT q.*, GROUP_CONCAT(c.question_choice) AS questionChoices
+        FROM tbl_korean q
+                 LEFT JOIN tbl_korean_choice c ON q.qno = c.qno
+        GROUP BY q.qno
+        ORDER BY q.qno, c.idx;
+    </select>
+
+    <insert id="insertKoreanAnswer">
+        INSERT INTO tbl_korean_answer (username, qno, answer)
+        VALUES
+            (#{answer.username}, #{answer.qno}, #{answer.answer});
+    </insert>
+
+    <select id="countKoreanScore" resultType="_int">
+        SELECT count(*) FROM tbl_korean WHERE qno = #{answer.qno} AND answer LIKE CONCAT('%', #{answer.answer}, '%');
+    </select>
+
+    <select id="totalKoreanScore" resultType="_int">
+        SELECT count(*) FROM tbl_korean;
+    </select>
+
+
+    <select id="mathExamList" resultType="com.example.testproject.dto.ExamDto">
+        SELECT q.*, GROUP_CONCAT(c.question_choice) AS questionChoices
+        FROM tbl_math q
+                 LEFT JOIN tbl_math_choice c ON q.qno = c.qno
+        GROUP BY q.qno
+        ORDER BY q.qno, c.idx;
+    </select>
+
+    <insert id="insertMathAnswer">
+        INSERT INTO tbl_math_answer (username, qno, answer)
+        VALUES
+            (#{answer.username}, #{answer.qno}, #{answer.answer});
+    </insert>
+
+    <select id="countMathScore" resultType="_int">
+        SELECT count(*) FROM tbl_math WHERE qno = #{answer.qno} AND answer LIKE CONCAT('%', #{answer.answer}, '%');
+    </select>
+
+    <select id="totalMathScore" resultType="_int">
+        SELECT count(*) FROM tbl_math;
+    </select>
+
+
+    <select id="historyExamList" resultType="com.example.testproject.dto.ExamDto">
+        SELECT q.*, GROUP_CONCAT(c.question_choice) AS questionChoices
+        FROM tbl_history q
+                 LEFT JOIN tbl_history_choice c ON q.qno = c.qno
+        GROUP BY q.qno
+        ORDER BY q.qno, c.idx;
+    </select>
+
+    <insert id="insertHistoryAnswer">
+        INSERT INTO tbl_history_answer (username, qno, answer)
+        VALUES
+            (#{answer.username}, #{answer.qno}, #{answer.answer});
+    </insert>
+
+    <select id="countHistoryScore" resultType="_int">
+        SELECT count(*) FROM tbl_history WHERE qno = #{answer.qno} AND answer LIKE CONCAT('%', #{answer.answer}, '%');
+    </select>
+
+    <select id="totalHistoryScore" resultType="_int">
+        SELECT count(*) FROM tbl_history;
+    </select>
+
+</mapper>
